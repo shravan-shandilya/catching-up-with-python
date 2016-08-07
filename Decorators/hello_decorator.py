@@ -1,13 +1,14 @@
 #!/usr/bin/python
 def decorator(func):
-	def replaced_function():
-		print "Boom..!",func.__name__,"got replaced ",
-		print "Inside the replaced function now.."
-	return replaced_function
+	def wrapper():
+		print "Boom..! some feature wrapping before actually calling",func.__name__," ",
+		func(); 					
+		print "wrapping some features after actually calling the real function"
+	return wrapper
 
 @decorator
 def actual_function():
-	print "I think something is replacing me. :("
+	print "The core feature :) "
 
 
 actual_function()
