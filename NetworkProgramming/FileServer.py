@@ -26,10 +26,19 @@ while data != "nothing":
 	if data.startswith("get"):
 		temp_file = file("./resources/"+data.split(" ")[1],"r")
 		temp_data = temp_file.read(1024)
-		while temp_data:
+		wrote = True
+		while (temp_data != "") & wrote:
 			conn.send(temp_data)
+			print "Sent data"
 			temp_data = temp_file.read(1024)
+			responce = conn.recv(1024)
+			print "Recieved:"+responce
+			if responce=="wrote":
+				wrote = True
+			else:
+				wrote = False
 		conn.send("EOF")
+		print "Sent EOF"
 		temp_file.close()
 	elif data == "resources":
 		conn.send(str(os.listdir("./resources")))

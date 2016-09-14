@@ -13,11 +13,11 @@ resource = raw_input("What do you want?\n")
 while resource != "nothing":
 	s.send("get "+resource)
 	recv_file = file("recieved/"+resource,"w+")
-	data = ""
+	data = s.recv(1024)
 	while data != "EOF":
 		recv_file.write(data)
+		s.send("wrote")
 		data = s.recv(1024)
-		print data
 	recv_file.close()
 	print "available resources",available_resources
 	resource = raw_input("what do you want?\n")
